@@ -1,64 +1,68 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// import $ from "jquery";
-// window.jQuery = $;
-// window.$ = $;
-// global.jQuery = $;
-// import "bootstrap";
+class LinkVoteApp extends React.Component {
+  render() {
 
-// import "./styles/styles.scss";
-
-// console.log($().jquery);
-
-
-const app = {
-    links:[]
+    const app = {
+      links:['dfds','sdgs']
+  }
+    return (
+      <div>
+        <Header />
+        <AddLink />
+        <Links links={app.links}/>
+      </div>
+    );
+  }
 }
 
-const onFormSubmit = e => {
-  e.preventDefault();  
-  const link = e.target.elements.link.value;
-  if(link){
-    app.links.push(link);  
-    e.target.elements.link.value = ''; //reset input
-    render();
-  }  
-};
+class Header extends React.Component {
+  render() {
+    return (
+      <div>
+        Header
+      </div>
+    );
+  }
+}
 
-const onRemoveAll = () => {
-    app.links = [];
-    render();
-};
+class AddLink extends React.Component {
+  render() {
+    return (
+      <div>
 
-const appRoot = document.getElementById("app");
+        add link here
 
-const render = () => {
-    const template = (
-        <div className="container">
-          <form onSubmit={onFormSubmit}>
-            <div className="form-group">
-              <label htmlFor="linkUrl">Link Url</label>
-              <input
-                type="text"
-                className="form-control"
-                id="linkUrl"                
-                placeholder="Link Url"
-                name="link"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Add
-            </button>
-          </form>
-          <hr />    
-         <button type="button" onClick={onRemoveAll} className="btn btn-danger">Remove All</button>
-         <hr />          
-          {app.links.length}
-        </div>
-      );
-     
-      ReactDOM.render(template, appRoot);
-};
+      </div>
+    );
+  }
+}
 
-render();
+class Links extends React.Component {
+  render() {
+    return (
+      <div>        
+          {
+            this.props.links.map((link, i) => <Link key={i} link={link} />) // return <li key={i}>{link}</li>
+          }       
+      </div>
+    );
+  }
+}
+
+
+class Link extends React.Component {
+  render() {
+    return (
+      <div>
+      
+            {this.props.link}
+         
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<LinkVoteApp />, document.getElementById('app'));
