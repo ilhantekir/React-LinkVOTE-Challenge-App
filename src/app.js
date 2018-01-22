@@ -6,6 +6,7 @@ class LinkVoteApp extends React.Component {
     super(props);
 
     this.handleDeleteLinks = this.handleDeleteLinks.bind(this);
+    this.handlePick = this.handlePick.bind(this);
     this.state = {
       links: ['ilhan tekir', 'lorem']
     }
@@ -19,16 +20,41 @@ class LinkVoteApp extends React.Component {
     });
   }
 
+  handlePick(){
+    const randomNum = Math.floor(Math.random() * this.state.links.length);
+    const link = this.state.links[randomNum];
+    console.log(link);
+  }
+
   render() {
 
     return (
       <div>
         <Header />
+        <Action 
+          hasLinks ={this.state.links.length > 0}
+          handlePick = {this.handlePick}
+        />
         <AddLink />
         <Links
           links={this.state.links}
           handleDeleteLinks = {this.handleDeleteLinks}
           />
+      </div>
+    );
+  }
+}
+
+class Action extends React.Component{
+  render() {
+    return (
+      <div>       
+      
+          <button
+          onClick={this.props.handlePick}
+          disabled={!this.props.hasLinks}
+          className="btn btn-default">What should I do?</button>
+              
       </div>
     );
   }
