@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './styles/styles.scss';
+import $ from "Jquery";
 
 class LinkVoteApp extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class LinkVoteApp extends React.Component {
 
     this.handleDeleteLinks = this.handleDeleteLinks.bind(this);
     this.handlePick = this.handlePick.bind(this);
+    this.handleAddLink = this.handleAddLink.bind(this);
     this.state = {
       links: ['ilhan tekir', 'lorem']
     }
@@ -27,6 +29,13 @@ class LinkVoteApp extends React.Component {
     console.log(link);
   }
 
+  handleAddLink() {
+    
+   
+      console.log($('#linkUrl').val());
+   
+  }
+
   render() {
 
     return (
@@ -36,7 +45,9 @@ class LinkVoteApp extends React.Component {
           hasLinks ={this.state.links.length > 0}
           handlePick = {this.handlePick}
         />
-        <AddLink />
+        <AddLink 
+          handleAddLink = {this.handleAddLink}
+        />
         <Links
           links={this.state.links}
           handleDeleteLinks = {this.handleDeleteLinks}
@@ -73,23 +84,26 @@ class Header extends React.Component {
 
 class AddLink extends React.Component {
 
-  handleFormSubmit(e) {
-    e.preventDefault();
-    const link = e.target.elements.link.value.trim();
-    if (link) {
-      // app.links.push(link);  
-      // e.target.elements.link.value = ''; //reset input
+  // constructor(props){
+  //   super(props);
+  //   this.handleFormSubmit = this.handleFormSubmit.bind(this); 
+  // }
 
-      console.log(link);
-
-    }
-  }
+  // handleFormSubmit(e) {
+  //   e.preventDefault();
+  //   const link = e.target.elements.link.value.trim();
+  //   if (link) {
+  //     // app.links.push(link);  
+  //     // e.target.elements.link.value = ''; //reset input
+  //     this.props.handleAddLink(link);      
+  //   }
+  // }
 
   render() {
     return (
       <div>
 
-        <form onSubmit={this.handleFormSubmit}>
+       
           <div className="form-group">
             <label htmlFor="linkUrl">Link Url</label>
             <input
@@ -100,10 +114,10 @@ class AddLink extends React.Component {
               name="link"
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" onClick={this.props.handleAddLink} className="btn btn-primary">
             Add
             </button>
-        </form>
+        
 
       </div>
     );
