@@ -10,7 +10,7 @@ class LinkVoteApp extends React.Component {
     this.handlePick = this.handlePick.bind(this);
     this.handleAddLink = this.handleAddLink.bind(this);
     this.state = {
-      links: ['ilhan tekir', 'lorem']
+      links: []
     }
   }
 
@@ -29,6 +29,13 @@ class LinkVoteApp extends React.Component {
   }
 
   handleAddLink(link) {
+
+    if (!link) {
+      return 'Enter Valid value to add item'
+    }else if (this.state.links.indexOf(link) > -1) {
+      return 'This link already exists';
+    }
+
     this.setState((prevState) => {       
       
       return {
@@ -89,21 +96,28 @@ class AddLink extends React.Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.state = {
+      error:undefined
+    }
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
     const link = e.target.elements.link.value.trim();
-    if (link) {     
-      this.props.handleAddLink(link);
-      e.target.elements.link.value = ''; //reset input
+    const error = this.props.handleAddLink(link);
 
-    }
+    this.setState(()=>{
+      return {error};//es6 shot syntax error:error
+    });
+
+     e.target.elements.link.value = ''; //reset input
+
   }
 
   render() {
     return (
       <div>
+        {this.state.error && <p> {this.state.error} </p>}
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="linkUrl">Link Url</label>
