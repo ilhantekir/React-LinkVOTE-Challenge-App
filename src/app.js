@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './styles/styles.scss';
-import $ from "Jquery";
 
 class LinkVoteApp extends React.Component {
   constructor(props) {
@@ -23,17 +22,18 @@ class LinkVoteApp extends React.Component {
     });
   }
 
-  handlePick(){
+  handlePick() {
     const randomNum = Math.floor(Math.random() * this.state.links.length);
     const link = this.state.links[randomNum];
     console.log(link);
   }
 
-  handleAddLink() {
-    
-   
-      console.log($('#linkUrl').val());
-   
+  handleAddLink(link) {
+
+
+    console.log(link);
+
+
   }
 
   render() {
@@ -41,32 +41,32 @@ class LinkVoteApp extends React.Component {
     return (
       <div>
         <Header />
-        <Action 
-          hasLinks ={this.state.links.length > 0}
-          handlePick = {this.handlePick}
+        <Action
+          hasLinks={this.state.links.length > 0}
+          handlePick={this.handlePick}
         />
-        <AddLink 
-          handleAddLink = {this.handleAddLink}
+        <AddLink
+          handleAddLink={this.handleAddLink}
         />
         <Links
           links={this.state.links}
-          handleDeleteLinks = {this.handleDeleteLinks}
-          />
+          handleDeleteLinks={this.handleDeleteLinks}
+        />
       </div>
     );
   }
 }
 
-class Action extends React.Component{
+class Action extends React.Component {
   render() {
     return (
-      <div>     
-      
-          <button
+      <div>
+
+        <button
           onClick={this.props.handlePick}
           disabled={!this.props.hasLinks}
           className="btn btn-default">What should I do?</button>
-              
+
       </div>
     );
   }
@@ -84,26 +84,27 @@ class Header extends React.Component {
 
 class AddLink extends React.Component {
 
-  // constructor(props){
-  //   super(props);
-  //   this.handleFormSubmit = this.handleFormSubmit.bind(this); 
-  // }
+  constructor(props) {
+    super(props);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
 
-  // handleFormSubmit(e) {
-  //   e.preventDefault();
-  //   const link = e.target.elements.link.value.trim();
-  //   if (link) {
-  //     // app.links.push(link);  
-  //     // e.target.elements.link.value = ''; //reset input
-  //     this.props.handleAddLink(link);      
-  //   }
-  // }
+  handleFormSubmit(e) {
+    e.preventDefault();
+    const link = e.target.elements.link.value.trim();
+    if (link) {
+      // app.links.push(link);  
+      this.props.handleAddLink(link);
+      e.target.elements.link.value = ''; //reset input
+
+    }
+  }
 
   render() {
     return (
       <div>
 
-       
+        <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="linkUrl">Link Url</label>
             <input
@@ -114,19 +115,19 @@ class AddLink extends React.Component {
               name="link"
             />
           </div>
-          <button type="submit" onClick={this.props.handleAddLink} className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Add
             </button>
-        
+        </form>
 
       </div>
     );
   }
 }
 
-class Links extends React.Component { 
+class Links extends React.Component {
   render() {
-   
+
     return (
       <div>
         <button type="button" onClick={this.props.handleDeleteLinks} className="btn btn-danger">Remove All</button>
