@@ -29,11 +29,13 @@ class LinkVoteApp extends React.Component {
   }
 
   handleAddLink(link) {
-
-
-    console.log(link);
-
-
+    this.setState((prevState) => {       
+      
+      return {
+        //links: prevState.links.concat([link])  
+        links: prevState.links.concat([link])  
+      }
+    });
   }
 
   render() {
@@ -92,8 +94,7 @@ class AddLink extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const link = e.target.elements.link.value.trim();
-    if (link) {
-      // app.links.push(link);  
+    if (link) {     
       this.props.handleAddLink(link);
       e.target.elements.link.value = ''; //reset input
 
@@ -103,7 +104,6 @@ class AddLink extends React.Component {
   render() {
     return (
       <div>
-
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="linkUrl">Link Url</label>
@@ -119,7 +119,6 @@ class AddLink extends React.Component {
             Add
             </button>
         </form>
-
       </div>
     );
   }
