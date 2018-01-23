@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import './styles/styles.scss';
 
 class LinkVoteApp extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class LinkVoteApp extends React.Component {
 class Action extends React.Component{
   render() {
     return (
-      <div>       
+      <div>     
       
           <button
           onClick={this.props.handlePick}
