@@ -66,21 +66,6 @@ class LinkVoteApp extends React.Component {
   }
 }
 
-// class Action extends React.Component {
-//   render() {
-//     return (
-//       <div>
-
-//         <button
-//           onClick={this.props.handlePick}
-//           disabled={!this.props.hasLinks}
-//           className="btn btn-default">What should I do?</button>
-
-//       </div>
-//     );
-//   }
-// }
-
 
 const Action = (props) => {
   return (
@@ -95,15 +80,15 @@ const Action = (props) => {
   );
 }
 
-class Header extends React.Component {
-  render() {
+const Header = ()=>{
     return (
       <div>
         Header
       </div>
-    );
-  }
+    );  
 }
+
+
 
 class AddLink extends React.Component {
 
@@ -152,31 +137,26 @@ class AddLink extends React.Component {
   }
 }
 
-class Links extends React.Component {
-  render() {
+const Links = (props) => {
+  return (
+    <div>
+      <button type="button" onClick={props.handleDeleteLinks} className="btn btn-danger">Remove All</button>
+      {
+        props.links.map((link) => <Link key={link} link={link} />) // return <li key={i}>{link}</li>
+      }
+    </div>
+  );
+}
 
-    return (
-      <div>
-        <button type="button" onClick={this.props.handleDeleteLinks} className="btn btn-danger">Remove All</button>
-
-        {
-          this.props.links.map((link) => <Link key={link} link={link} />) // return <li key={i}>{link}</li>
-        }
-      </div>
-    );
-  }
+const Link = (props)=>{
+  return (
+    <div>
+      {props.link}
+    </div>
+  );
 }
 
 
-class Link extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.link}
-      </div>
-    );
-  }
-}
 
 
 ReactDOM.render(<LinkVoteApp />, document.getElementById('app'));
