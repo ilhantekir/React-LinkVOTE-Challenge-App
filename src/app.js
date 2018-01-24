@@ -15,11 +15,14 @@ class LinkVoteApp extends React.Component {
   }
 
   handleDeleteLinks() {
-    this.setState(() => {
-      return {
-        links: []
-      }
-    });
+    // this.setState(() => {
+    //   return {
+    //     links: []
+    //   }
+    // });
+
+    this.setState(()=> ({ links: [] }));
+
   }
 
   handlePick() {
