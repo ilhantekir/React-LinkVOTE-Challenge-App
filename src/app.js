@@ -80,13 +80,17 @@ const Action = (props) => {
   );
 }
 
-const Header = ()=>{
+const Header = (props)=>{
     return (
       <div>
-        Header
+        <h2>{props.title}</h2>
       </div>
     );  
 }
+
+Header.defaultProps = {
+  title: 'React'
+};
 
 
 
