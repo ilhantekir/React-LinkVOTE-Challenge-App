@@ -7,6 +7,7 @@ class LinkVoteApp extends React.Component {
     super(props);
 
     this.handleDeleteLinks = this.handleDeleteLinks.bind(this);
+    this.handleDeleteLink = this.handleDeleteLink.bind(this);    
     this.handlePick = this.handlePick.bind(this);
     this.handleAddLink = this.handleAddLink.bind(this);
     this.state = {
@@ -18,10 +19,17 @@ class LinkVoteApp extends React.Component {
     this.setState(()=> ({ links: [] }));
   }
 
+  handleDeleteLink(linkToRemove){   
+    this.setState((prevState)=>({
+      links: prevState.links.filter((link)=> linkToRemove !== link )
+    }));
+    
+  }
+
   handlePick() {
     const randomNum = Math.floor(Math.random() * this.state.links.length);
     const link = this.state.links[randomNum];
-    console.log(link);
+
   }
 
   handleAddLink(link) {
@@ -51,6 +59,7 @@ class LinkVoteApp extends React.Component {
         <Links
           links={this.state.links}
           handleDeleteLinks={this.handleDeleteLinks}
+          handleDeleteLink={this.handleDeleteLink}
         />
       </div>
     );
@@ -99,11 +108,8 @@ class AddLink extends React.Component {
     e.preventDefault();
     const link = e.target.elements.link.value.trim();
     const error = this.props.handleAddLink(link);
-
     this.setState(()=>({error}));
-
      e.target.elements.link.value = ''; //reset input
-
   }
 
   render() {
@@ -135,7 +141,12 @@ const Links = (props) => {
     <div>
       <button type="button" onClick={props.handleDeleteLinks} className="btn btn-danger">Remove All</button>
       {
-        props.links.map((link) => <Link key={link} link={link} />) // return <li key={i}>{link}</li>
+        props.links.map((link) => (
+          <Link 
+          key={link}
+          link={link} 
+          handleDeleteLink = {props.handleDeleteLink}/>
+        )) 
       }
     </div>
   );
@@ -144,7 +155,14 @@ const Links = (props) => {
 const Link = (props)=>{
   return (
     <div>
-      {props.link}
+      {props.link}     
+
+        <button 
+        onClick={(e)=>{
+          props.handleDeleteLink(props.link);
+        }} 
+        
+        className="btn btn-danger btn-sm">X</button>      
     </div>
   );
 }
