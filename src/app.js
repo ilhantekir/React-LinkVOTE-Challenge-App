@@ -15,14 +15,7 @@ class LinkVoteApp extends React.Component {
   }
 
   handleDeleteLinks() {
-    // this.setState(() => {
-    //   return {
-    //     links: []
-    //   }
-    // });
-
     this.setState(()=> ({ links: [] }));
-
   }
 
   handlePick() {
@@ -39,13 +32,8 @@ class LinkVoteApp extends React.Component {
       return 'This link already exists';
     }
 
-    this.setState((prevState) => {       
-      
-      return {
-        //links: prevState.links.concat([link])  
-        links: prevState.links.concat([link])  
-      }
-    });
+    this.setState((prevState)=>({links: prevState.links.concat([link])}));
+
   }
 
   render() {
@@ -112,9 +100,7 @@ class AddLink extends React.Component {
     const link = e.target.elements.link.value.trim();
     const error = this.props.handleAddLink(link);
 
-    this.setState(()=>{
-      return {error};//es6 shot syntax error:error
-    });
+    this.setState(()=>({error}));
 
      e.target.elements.link.value = ''; //reset input
 
