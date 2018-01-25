@@ -15,6 +15,26 @@ class LinkVoteApp extends React.Component {
     }
   }
 
+componentDidMount(){
+
+  try{
+    const json = localStorage.getItem('links');
+    const links = JSON.parse(json);
+    if (links) {
+      this.setState(()=> ({ links }));
+    }  
+  } catch (e){
+    console.log(e);
+  }  
+}
+componentDidUpdate(prevProps,prevState){
+  if (prevState.links.length !== this.state.links.length) { 
+    const json = JSON.stringify(this.state.links);
+    localStorage.setItem('links',json);    
+  }
+}
+
+
   handleDeleteLinks() {
     this.setState(()=> ({ links: [] }));
   }
@@ -109,7 +129,9 @@ class AddLink extends React.Component {
     const link = e.target.elements.link.value.trim();
     const error = this.props.handleAddLink(link);
     this.setState(()=>({error}));
-     e.target.elements.link.value = ''; //reset input
+    if (!error) {
+      e.target.elements.link.value = ''; //reset input
+    }
   }
 
   render() {
@@ -140,6 +162,7 @@ const Links = (props) => {
   return (
     <div>
       <button type="button" onClick={props.handleDeleteLinks} className="btn btn-danger">Remove All</button>
+      {props.links.length === 0 && <p>Please add a link</p>}
       {
         props.links.map((link) => (
           <Link 
